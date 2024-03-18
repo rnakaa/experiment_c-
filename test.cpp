@@ -3,5 +3,7 @@
 int main(){
 	Command command_class;
 
-	command_class.parseMessage()
+	std::string message;
+	std::cin >> message;
+	command_class.recCommand(1, message);
 }

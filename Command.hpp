@@ -9,7 +9,7 @@
 #include <fstream>
 #include <sstream>
 
-typedef void (*CommandFunction)(const ssize_t, std::vector<std::string> &);
+typedef void (*CommandFunction)(const int, std::vector<std::string> &);
 
 class Command{
 	private:
@@ -17,11 +17,12 @@ class Command{
 
 	public:
 		Command();
-		void executeCommand(const ssize_t fd, const std::string & command, std::vector<std::string> & arg);
+		void executeCommand(const int fd);
 		void parseMessage(std::string &message);
+		void recCommand(const int fd, std::string message);
 
 	private:
-		static void pass(const ssize_t fd, std::vector<std::string> & arg);
+		static void pass(const int fd, std::vector<std::string> & arg);
 		std::vector<std::string> arg_;
 		std::string command_;
 };

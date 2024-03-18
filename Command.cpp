@@ -1,20 +1,20 @@
-#include <Command.hpp>
+#include "Command.hpp"
 
 Command::Command(){
 	this->commandsMap_["PASS"] = Command::pass;
 }
 
-void Command::executeCommand(const ssize_t fd, const std::string & command, std::vector<std::string> & arg){
-	CommandFunction func = this->commandsMap_[command];
+void Command::executeCommand(const int fd){
+	CommandFunction func = this->commandsMap_[this->command_];
 	if (func) {
-		func(fd, arg);
+		func(fd, this->arg_);
 	}
 	else {
-		std::cout << "Unknown Command: " << command << std::endl;
+		std::cout << "Unknown Command: " << this->command_ << std::endl;
 	}
 }
 
-void Command::pass(const ssize_t fd, std::vector<std::string> & arg){
+void Command::pass(const int fd, std::vector<std::string> & arg){
 	std::cout << "pass is " << arg.at(0) << std::endl;
 }
 
@@ -26,4 +26,11 @@ void Command::parseMessage(std::string& message){
 	while (iss >> word){
 		this->arg_.push_back(word);
 	}
+}
+
+void Command::recCommand(const int fd, std::string message){
+	parseMessage(message);
+	executeCommand(fd);
+	
+
 }

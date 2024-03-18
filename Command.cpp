@@ -15,7 +15,12 @@ void Command::executeCommand(const int fd){
 }
 
 void Command::pass(const int fd, std::vector<std::string> & arg){
-	std::cout << "pass is " << arg.at(0) << std::endl;
+	try {
+		arg.at(0);
+		std::cout << "pass is " << arg.at(0) << std::endl;
+	} catch (const std::out_of_range & e){
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
 }
 
 void Command::parseMessage(std::string& message){
@@ -31,6 +36,4 @@ void Command::parseMessage(std::string& message){
 void Command::recCommand(const int fd, std::string message){
 	parseMessage(message);
 	executeCommand(fd);
-	
-
 }
